@@ -6,8 +6,33 @@ public class Word extends Part{
         super(value);
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString(){
         return getValue();
+    }
+
+    
+    /** 
+     * @param last
+     */
+    public void transform(boolean last){
+        String val = getValue();
+        if(val.length() == 0){
+            return;
+        }
+
+        String newVal = new String();
+        if(last){
+            Character ch = Character.valueOf(val.charAt(val.length() - 1));
+            newVal = val.replaceAll(ch.toString(), "");
+        } else{
+            Character ch = Character.valueOf(val.charAt(0));
+            newVal = val.replaceAll(ch.toString(), "");
+        }
+        setValue(newVal);
     }
 }

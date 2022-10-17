@@ -6,6 +6,10 @@ public class Sentence extends Part{
         super(value);
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString(){
         String result = new String();

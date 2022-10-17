@@ -9,6 +9,11 @@ import parts.Part;
 import parts.Text;
 
 public class TextParser extends AbstractParser {
+    
+    /** 
+     * @param part
+     * @return boolean
+     */
     @Override
     public boolean parse(Part part) {
         if (part.getClass() == Text.class) {
@@ -41,15 +46,30 @@ public class TextParser extends AbstractParser {
         }
     }
 
+    
+    /** 
+     * @param source
+     * @return String
+     */
     private String removeWhitespacesAndTabs(String source){
         source = source.replaceAll("\t+", " ");
         return source.replaceAll("\s{2,}", " ");
     }
 
+    
+    /** 
+     * @param mergedParagraphs
+     * @return ArrayList<String>
+     */
     private ArrayList<String> getParagraphsStringsFromText(String mergedParagraphs){
         return new ArrayList<>(Arrays.asList(mergedParagraphs.split("\n+")));
     }
 
+    
+    /** 
+     * @param mergedParagraphs
+     * @return ArrayList<Paragraph>
+     */
     private ArrayList<Paragraph> getParagraphs(String mergedParagraphs){
         mergedParagraphs = removeWhitespacesAndTabs(mergedParagraphs);
         ArrayList<String> paragraphsStr = getParagraphsStringsFromText(mergedParagraphs);

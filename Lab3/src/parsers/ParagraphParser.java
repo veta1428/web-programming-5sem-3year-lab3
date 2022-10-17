@@ -9,6 +9,11 @@ import parts.Part;
 import parts.Sentence;
 
 public class ParagraphParser extends AbstractParser {
+    
+    /** 
+     * @param part
+     * @return boolean
+     */
     @Override
     public boolean parse(Part part) {
         if (part.getClass() == Paragraph.class) {

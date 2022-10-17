@@ -10,26 +10,46 @@ public abstract class Part {
         setValue(value);
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getValue()
     {
         return value;
     }
 
+    
+    /** 
+     * @param value
+     */
     public void setValue(String value)
     {
         this.value = value;
     }
 
+    
+    /** 
+     * @return ArrayList<Part>
+     */
     public ArrayList<Part> getSubParts()
     {
         return subparts;
     }
 
+    
+    /** 
+     * @param subparts
+     */
     public void setSubParts(ArrayList<Part> subparts)
     {
         this.subparts = subparts;
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString(){
         String result = new String();
@@ -39,6 +59,10 @@ public abstract class Part {
         return result;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String print() {
         return value.trim();
     }

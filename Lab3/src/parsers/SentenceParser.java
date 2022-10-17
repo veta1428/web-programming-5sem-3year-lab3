@@ -9,6 +9,11 @@ import parts.Sentence;
 import parts.Word;
 
 public class SentenceParser extends AbstractParser {
+    
+    /** 
+     * @param part
+     * @return boolean
+     */
     @Override
     public boolean parse(Part part) {
         if (part.getClass() == Sentence.class) {
@@ -28,6 +33,11 @@ public class SentenceParser extends AbstractParser {
         }
     }
 
+    
+    /** 
+     * @param str
+     * @return ArrayList<Part>
+     */
     private ArrayList<Part> classify(String str)
     {
         ArrayList<Part> parts = new ArrayList<>();

@@ -10,6 +10,10 @@ public class PunktuationMark extends Part {
         super(value);
     } 
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString(){
         return getValue();

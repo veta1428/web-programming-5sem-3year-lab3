@@ -7,6 +7,10 @@ public class Code extends Part {
         super(value);
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String toString(){
         return CodeSign + getValue() + CodeSign;
