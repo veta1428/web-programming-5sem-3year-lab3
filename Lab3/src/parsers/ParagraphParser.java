@@ -16,6 +16,7 @@ public class ParagraphParser extends AbstractParser {
      */
     @Override
     public boolean parse(Part part) {
+        getLogger(this).info(this.getClass() + " parse started...");
         if (part.getClass() == Paragraph.class) {
             BreakIterator iterator = BreakIterator.getSentenceInstance(Locale.US);
             String source = part.getValue();
@@ -31,8 +32,10 @@ public class ParagraphParser extends AbstractParser {
             }
 
             part.setSubParts(sentences);
+            getLogger(this).info(this.getClass() + " parse completed.");
             return true;
         } else {
+            getLogger(this).info(this.getClass() + " parse delegated.");
             return super.parse(part);
         }
     }

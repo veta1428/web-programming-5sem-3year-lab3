@@ -16,6 +16,7 @@ public class TextParser extends AbstractParser {
      */
     @Override
     public boolean parse(Part part) {
+        getLogger(this).info(this.getClass() + " parse started...");
         if (part.getClass() == Text.class) {
 
             String regexp = Code.CodeSign;
@@ -40,8 +41,10 @@ public class TextParser extends AbstractParser {
             }
 
             part.setSubParts(subpartsClassified);
+            getLogger(this).info(this.getClass() + " parse completed.");
             return true;
         } else {
+            getLogger(this).info(this.getClass() + " parse delegated.");
             return super.parse(part);
         }
     }

@@ -21,6 +21,12 @@ public class Word extends Part{
      */
     public void transform(boolean last){
         String val = getValue();
+
+        if(val == null){
+            logger.error("Value is null");
+            throw new IllegalArgumentException("Value cannot be null!");
+        }
+
         if(val.length() == 0){
             return;
         }

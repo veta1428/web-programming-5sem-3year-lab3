@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import comparators.PartComparer;
 import parsers.IParser;
 import parsers.ParagraphParser;
@@ -50,7 +53,12 @@ public class App {
     private static void transform(Part part, boolean last) {
         for (Part subpart : part.getSubParts()) {
             if(subpart.getClass() == Word.class){
-                ((Word)subpart).transform(last);
+                try{
+                    ((Word)subpart).transform(last);
+                }
+                catch(IllegalArgumentException ex){
+                    System.out.println("ERROR. Job terminated");
+                }
             } else if(subpart.getClass() != PunktuationMark.class && subpart.getClass() != Code.class){
                 transform(subpart, last);
             }
@@ -64,7 +72,8 @@ public class App {
      */
     public static void main(String[] args) throws Exception {
         
-        Locale locale = new Locale("ua-UA");
+        Locale locale = new Locale("pol-PL");
+        Logger logger = LogManager.getRootLogger();
 
         AppLocale.set(locale);
 
@@ -75,16 +84,6 @@ public class App {
                 .setNext(sparser)
                 .setNext(pparser);
 
-        String strText = new String(
-                "Hello привет, I am Liza! And what is your name? \nHow are you? \t\t\t\tLook!\n@code@ This is" +
-                        "\n my code@code@Good \tbye! And some code for you: \n@code@ Beautiful\tcode@code@");
-        Text txt = new Text(strText);
-        parseAll(txt, tparser);
-        // System.out.println("*************************Restored text
-        // ************************");
-        // System.out.println(txt.toString());
-
-        System.out.println("*****************************PART 2***********************************");
         String strText2 = new String(
                 "Hello, I привет, друзья, приветствую вас, am Liza! And what is your name? \nHow areaa you? \t\t\t\tLook!\n@code@ This is" +
                         "\n my code@code@Good \tbye! And some code for you: \n@code@ Beautiful\tcode@code@");
@@ -99,7 +98,17 @@ public class App {
         }
 
         System.out.println(AppLocale.getString(AppLocale.ENTER_CHARACTER));
-        char character = System.console().readLine().charAt(0);
+
+        char character;
+        
+        try{
+            character = getCharInput();
+        }
+        catch(IllegalArgumentException ex){
+            logger.error("Error occured job aborted.");
+            System.out.println("Error happened: " + ex.getMessage() + " - job terminated");
+            return;
+        }
 
         PartComparer comp = new PartComparer(character);
         words.sort(comp);
@@ -110,10 +119,26 @@ public class App {
             System.out.println(word.getValue());
         }
         System.out.println(AppLocale.getString(AppLocale.TRANSFORM_MODE));
-        char transformMode = System.console().readLine().charAt(0);
 
-        boolean last = transformMode == 'F' ? false : true;
+        try{
+            character = getCharInput();
+        }
+        catch(IllegalArgumentException ex){
+            logger.error("Error occured job aborted.");
+            System.out.println("Error happened: " + ex.getMessage() + " - job terminated");
+            return;
+        }
+
+        boolean last = character == 'F' ? false : true;
         transform(txt2, last);
         System.out.println(txt2.toString());
+    }
+
+    private static char getCharInput() {
+        String input = System.console().readLine();
+        if(input == null || input.length() == 0){
+            throw new IllegalArgumentException("Invalid argument!");
+        }
+        return input.charAt(0);
     }
 }

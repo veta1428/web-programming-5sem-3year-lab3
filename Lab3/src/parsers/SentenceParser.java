@@ -16,6 +16,7 @@ public class SentenceParser extends AbstractParser {
      */
     @Override
     public boolean parse(Part part) {
+        getLogger(this).info(this.getClass() + " parse started...");
         if (part.getClass() == Sentence.class) {
 
             String source = part.getValue();
@@ -27,8 +28,10 @@ public class SentenceParser extends AbstractParser {
                 parts.addAll(classify(token.trim()));
             }
             part.setSubParts(parts);
+            getLogger(this).info(this.getClass() + " parse completed.");
             return true;
         } else {
+            getLogger(this).info(this.getClass() + " parse delegated.");
             return super.parse(part);
         }
     }
